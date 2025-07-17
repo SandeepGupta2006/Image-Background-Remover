@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Image Background For Free</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    <div class="flash">{{message}}</div>
+    {% endfor %}
+    {% endwith %}
+
+    <main>
+
+        <h2 class="title">Remove Image Background For Free</h2>
+
+        <section id="uploadArea">
+            <p><strong>Click to Select or Drag & Drop</strong></p>
+            <form enctype="multipart/form-data" id="form" method="POST">
+                <input type="file" name="file" id="fileInput" accept="image/*">
+            </form>
+        </section>
+        
+        <section id="imageArea">
+            <div id="originalImage" class="image">
+                <img alt="Image" id="original" src="{{ url_for('static', filename='original.webp') }}">
+            </div>
+            <div id="removedBGImage" class="image">
+                <img alt="Image" id="edited" src="{{ url_for('static', filename='edited.png') }}">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 • Built & Designed by <a href="https://sandeepgupta.onrender.com/" style="color: inherit;"
+                target="_blank">
+                <b>Sandeep Gupta</b></a>
+        </p>
+    </footer>
+
+    <script>
+        uploadArea = document.getElementById("uploadArea");
+        form = document.getElementById("form");
+        fileInput = document.getElementById("fileInput");
+        original = document.getElementById("original");
+        edited = document.getElementById("edited");
+
+        uploadArea.addEventListener("click", () => {
+            fileInput.click();
+        })
+
+        fileInput.addEventListener("change", () => {
+            handleFile(fileInput.files[0]);
+        })
+
+        uploadArea.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = "#8888ff";
+        })
+
+        uploadArea.addEventListener("dragleave", () => {
+            uploadArea.style.borderColor = "#4f4f6f";
+        })
+
+        uploadArea.addEventListener("drop", (e) => {
+            e.preventDefault();
+            fileInput.files = e.dataTransfer.files;
+            handleFile(fileInput.files[0]);
+        })
+
+        async function handleFile(file) {
+            try {
+                const originalURL = URL.createObjectURL(file);
+
+                original.src = originalURL;
+                edited.src = "{{ url_for('static', filename='loading.png') }}";
+                document.getElementById("removedBGImage").style.backgroundImage = "url('none')"
+
+                original.onload = () => URL.revokeObjectURL(file);
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/', {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error("HTTP Error!")
+                }
+
+                const blob = await response.blob();
+                document.getElementById("removedBGImage").style.backgroundImage = "url('{{ url_for('static', filename='transparent.jpg') }}')";
+                edited.src = URL.createObjectURL(blob);
+
+                original.onload = () => URL.revokeObjectURL(originalURL);
+
+            } catch(error) {
+                alert("Error while removing background");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
