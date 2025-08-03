@@ -42,3 +42,18 @@ pip install -r requirements.txt
 
 # 4. Run the Flask app
 flask run
+```
+---
+
+## 🔐 Privacy Note
+
+This app runs entirely on your machine — no image data is sent to external servers or APIs.  
+All image processing is done locally using `rembg`.  
+Your uploads stay private and are not stored or shared.
+
+---
+
+## 🙋‍♂️ Author
+
+**Sandeep Gupta**
+[Portfolio](https://github.com/) • [GitHub](https://github.com/SandeepGupta2006/) • [LinkedIn](https://www.linkedin.com/in/sandeep-gupta-5872b4315/)
