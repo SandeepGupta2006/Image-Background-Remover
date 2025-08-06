@@ -57,4 +57,4 @@ Your uploads stay private and are not stored or shared.
 
 **Sandeep Gupta**
 
-[Portfolio](https://sandeepgupta2006.github.io/Portfolio/) • [GitHub](https://github.com/SandeepGupta2006/) • [LinkedIn](https://www.linkedin.com/in/sandeep-gupta-5872b4315/)
+[Portfolio](https://sandeepgupta2006.github.io/) • [GitHub](https://github.com/SandeepGupta2006/) • [LinkedIn](https://www.linkedin.com/in/sandeep-gupta-5872b4315/)
